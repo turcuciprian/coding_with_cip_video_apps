@@ -50,6 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
   StreamSubscription _intentDataStreamSubscription;
   List<SharedMediaFile> _sharedFiles;
   String _sharedText;
+  bool isText;
 
 @override
   void initState() {
@@ -59,6 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
     _intentDataStreamSubscription =
         ReceiveSharingIntent.getMediaStream().listen((List<SharedMediaFile> value) {
       setState(() {
+        isText = false;
         print("Shared:" + (_sharedFiles?.map((f)=> f.path)?.join(",") ?? ""));
         _sharedFiles = value;
         _sharedText = _sharedFiles[0].path;
@@ -70,6 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // For sharing images coming from outside the app while the app is closed
     ReceiveSharingIntent.getInitialMedia().then((List<SharedMediaFile> value) {
       setState(() {
+        isText = false;
         _sharedFiles = value;
         _sharedText = _sharedFiles[0].path;
 
@@ -80,6 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
     _intentDataStreamSubscription =
         ReceiveSharingIntent.getTextStream().listen((String value) {
       setState(() {
+        isText=true;
         _sharedText = value;
       });
     }, onError: (err) {
@@ -89,6 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // For sharing or opening urls/text coming from outside the app while the app is closed
     ReceiveSharingIntent.getInitialText().then((String value) {
       setState(() {
+        isText=true;
         _sharedText = value;
       });
     });
@@ -130,10 +135,10 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               'Your shared data:',
             ),
-            Text(
-              '$_sharedText',
+            isText==true?Text(
+              _sharedText!=null ? '$_sharedText':'nothing to show',
               style: Theme.of(context).textTheme.display1,
-            ),
+            ): Image.asset(_sharedText,fit:BoxFit.cover),
           ],
         ),
       ),
