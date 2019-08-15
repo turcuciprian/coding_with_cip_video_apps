@@ -52,16 +52,16 @@ class _MyHomePageState extends State<MyHomePage> {
   String _sharedText;
   bool isText;
 
-@override
+  @override
   void initState() {
     super.initState();
 
     // For sharing images coming from outside the app while the app is in the memory
-    _intentDataStreamSubscription =
-        ReceiveSharingIntent.getMediaStream().listen((List<SharedMediaFile> value) {
+    _intentDataStreamSubscription = ReceiveSharingIntent.getMediaStream()
+        .listen((List<SharedMediaFile> value) {
       setState(() {
         isText = false;
-        print("Shared:" + (_sharedFiles?.map((f)=> f.path)?.join(",") ?? ""));
+        print("Shared:" + (_sharedFiles?.map((f) => f.path)?.join(",") ?? ""));
         _sharedFiles = value;
         _sharedText = _sharedFiles[0].path;
       });
@@ -75,7 +75,6 @@ class _MyHomePageState extends State<MyHomePage> {
         isText = false;
         _sharedFiles = value;
         _sharedText = _sharedFiles[0].path;
-
       });
     });
 
@@ -83,7 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
     _intentDataStreamSubscription =
         ReceiveSharingIntent.getTextStream().listen((String value) {
       setState(() {
-        isText=true;
+        isText = true;
         _sharedText = value;
       });
     }, onError: (err) {
@@ -93,11 +92,12 @@ class _MyHomePageState extends State<MyHomePage> {
     // For sharing or opening urls/text coming from outside the app while the app is closed
     ReceiveSharingIntent.getInitialText().then((String value) {
       setState(() {
-        isText=true;
+        isText = true;
         _sharedText = value;
       });
     });
   }
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -135,10 +135,12 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               'Your shared data:',
             ),
-            isText==true?Text(
-              _sharedText!=null ? '$_sharedText':'nothing to show',
-              style: Theme.of(context).textTheme.display1,
-            ): Image.asset(_sharedText,fit:BoxFit.cover),
+            isText == true
+                ? Text(
+                    _sharedText != null ? '$_sharedText' : 'nothing to show',
+                    style: Theme.of(context).textTheme.display1,
+                  )
+                : Image.asset(_sharedText, fit: BoxFit.cover),
           ],
         ),
       ),
