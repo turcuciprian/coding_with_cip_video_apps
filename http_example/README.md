@@ -1,4 +1,4 @@
-# http_example
+# fun_with_flutter_app
 
 A new Flutter project.
 
