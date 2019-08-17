@@ -48,9 +48,10 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
   void _incrementCounter() async {
-
-
-print(await http.read('http://example.com/foobar.txt'));
+    print(await http.get('https://raw.githubusercontent.com/doxtitech/flutter_buddy_apps/master/http_example/GET_TEST.md'));
+    // http.post('');
+    // http.put('');
+    // http.delete('');
   }
 
   @override
