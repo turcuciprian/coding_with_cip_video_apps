@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Load Local and remote images'),
+      home: MyHomePage(title: 'Local and Remote image loading'),
     );
   }
 }
@@ -45,8 +45,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String localImagePath = '';
-  String remoteImagePath = '';
+  String localImgUrl;
+  String remoteImgUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -82,25 +82,39 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            new Image.network(remoteImagePath),
-            new Image.asset(localImagePath),
+            Row(children: <Widget>[
+              localImgUrl != null
+                ? new Image(
+                  width:100,
+                    image: AssetImage(localImgUrl),
+                  )
+                : Container(),
+                remoteImgUrl != null
+                ? new Image(
+                  width:100,
+                    image: NetworkImage(remoteImgUrl),
+                  )
+                : Container(),
+            ],),
             RaisedButton(
-                onPressed: () {
-                  setState(() {
-                    localImagePath = 'assets/person.png';
-                  });
-                },
-                child: Text('Load Local image',
-                    style: TextStyle(color: Colors.white)),
-                color: Colors.blue),
+              onPressed: () {
+                //
+                setState(() {
+                  localImgUrl = 'assets/small_cip.jpg';
+                });
+              },
+              child: Text('Load Local Image'),
+            ),
             RaisedButton(
-                onPressed: () {
-                  remoteImagePath =
-                      'https://Your_domainHere.com/file.png';
-                },
-                child: Text('Load REMOTE image',
-                    style: TextStyle(color: Colors.white)),
-                color: Colors.blue)
+              onPressed: () {
+                //
+                setState(() {
+                  remoteImgUrl =
+                      'https://avatars2.githubusercontent.com/u/47271880?s=460&v=4';
+                });
+              },
+              child: Text('Load REMOTE Image'),
+            )
           ],
         ),
       ),
