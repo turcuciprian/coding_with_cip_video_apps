@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_admob/firebase_admob.dart';
 
 void main() => runApp(MyApp());
 
@@ -45,22 +45,70 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 150;
+  MobileAdTargetingInfo targetingInfo;
+  BannerAd myBanner;
+  InterstitialAd myInterstitial;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    targetingInfo = MobileAdTargetingInfo(
+      keywords: <String>['flutterio', 'beautiful apps'],
+      contentUrl: 'https://flutter.io',
+      birthday: DateTime.now(),
+      childDirected: false,
+      designedForFamilies: false,
+      gender: MobileAdGender
+          .male, // or MobileAdGender.female, MobileAdGender.unknown
+      testDevices: <String>[], // Android emulators are considered test devices
+    );
+    myBanner = BannerAd(
+      // Replace the testAdUnitId with an ad unit id from the AdMob dash.
+      // https://developers.google.com/admob/android/test-ads
+      // https://developers.google.com/admob/ios/test-ads
+      adUnitId: BannerAd.testAdUnitId,
+      size: AdSize.fullBanner,
+      targetingInfo: targetingInfo,
+      listener: (MobileAdEvent event) {
+        print("BannerAd event is $event");
+      },
+    );
+    myInterstitial = InterstitialAd(
+      // Replace the testAdUnitId with an ad unit id from the AdMob dash.
+      // https://developers.google.com/admob/android/test-ads
+      // https://developers.google.com/admob/ios/test-ads
+      adUnitId: InterstitialAd.testAdUnitId,
+      targetingInfo: targetingInfo,
+      listener: (MobileAdEvent event) {
+        print("InterstitialAd event is $event");
+      },
+    );
+  }
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter+=50;
-    });
+  void _show_banner() {
+    myBanner
+      // typically this happens well before the ad is shown
+      ..load()
+      ..show(
+        // Positions the banner ad 60 pixels from the bottom of the screen
+        anchorOffset: 0.0,
+        // Banner Position
+        anchorType: AnchorType.bottom,
+      );
+  }
+
+  void _show_interstitial() {
+    myInterstitial
+      ..load()
+      ..show(
+        anchorOffset: 0.0,
+        // Banner Position
+        anchorType: AnchorType.bottom,
+      );
   }
 
   @override
   Widget build(BuildContext context) {
-    String url = "http://via.placeholder.com/350x$_counter";
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -93,20 +141,17 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            CachedNetworkImage(
-              imageUrl: url,
-              placeholder: (context, url) => new CircularProgressIndicator(),
-              errorWidget: (context, url, error) => new Icon(Icons.error),
+            RaisedButton(
+              onPressed: _show_banner,
+              child: Text('Show Test Banner Add'),
             ),
-            Image(image: new CachedNetworkImageProvider(url))
+            RaisedButton(
+                onPressed: _show_interstitial,
+                child: Text('Show Interstitial Ad'))
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
