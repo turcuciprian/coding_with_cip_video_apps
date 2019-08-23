@@ -75,7 +75,7 @@ packages:
     source: hosted
     version: "1.7.0"
   provider:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: provider
       url: "https://pub.dartlang.org"
