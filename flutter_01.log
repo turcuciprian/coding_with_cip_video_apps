@@ -1,0 +1,75 @@
+Flutter crash report; please file at https://github.com/flutter/flutter/issues.
+
+## command
+
+flutter create displaying_images_from_local_disk_cache_received_from_sharing_intent_example
+
+## exception
+
+FileSystemException: FileSystemException: Creation failed, path = 'C:\Users\Ciprian Turcu\Documents\work\coding_with_cip_video_apps\displaying_images_from_local_disk_cache_received_from_sharing_intent_example\android\app\src\main\kotlin\com\example\displaying_images_from_local_disk_cache_received_from_sharing_intent_example' (OS Error: The filename or extension is too long.
+, errno = 206)
+
+```
+#0      _Directory.createSync (dart:io/directory_impl.dart:138:7)
+#1      _File.createSync (dart:io/file_impl.dart:278:14)
+#2      ForwardingFile.createSync (package:file/src/forwarding/forwarding_file.dart:24:16)
+#3      Template.render.<anonymous closure> (package:flutter_tools/src/template.dart:155:28)
+#4      _LinkedHashMapMixin.forEach (dart:collection-patch/compact_hash.dart:377:8)
+#5      Template.render (package:flutter_tools/src/template.dart:124:24)
+#6      CreateCommand._renderTemplate (package:flutter_tools/src/commands/create.dart:623:21)
+#7      CreateCommand._generateApp (package:flutter_tools/src/commands/create.dart:546:23)
+<asynchronous suspension>
+#8      CreateCommand.runCommand (package:flutter_tools/src/commands/create.dart:397:37)
+<asynchronous suspension>
+#9      FlutterCommand.verifyThenRunCommand (package:flutter_tools/src/runner/flutter_command.dart:490:18)
+#10     _asyncThenWrapperHelper.<anonymous closure> (dart:async-patch/async_patch.dart:71:64)
+#11     _rootRunUnary (dart:async/zone.dart:1132:38)
+#12     _CustomZone.runUnary (dart:async/zone.dart:1029:19)
+#13     _FutureListener.handleValue (dart:async/future_impl.dart:137:18)
+#14     Future._propagateToListeners.handleValueCallback (dart:async/future_impl.dart:678:45)
+#15     Future._propagateToListeners (dart:async/future_impl.dart:707:32)
+#16     Future._completeWithValue (dart:async/future_impl.dart:522:5)
+#17     Future._asyncComplete.<anonymous closure> (dart:async/future_impl.dart:552:7)
+#18     _rootRun (dart:async/zone.dart:1124:13)
+#19     _CustomZone.run (dart:async/zone.dart:1021:19)
+#20     _CustomZone.runGuarded (dart:async/zone.dart:923:7)
+#21     _CustomZone.bindCallbackGuarded.<anonymous closure> (dart:async/zone.dart:963:23)
+#22     _microtaskLoop (dart:async/schedule_microtask.dart:41:21)
+#23     _startMicrotaskLoop (dart:async/schedule_microtask.dart:50:5)
+#24     _runPendingImmediateCallback (dart:isolate-patch/isolate_patch.dart:116:13)
+#25     _RawReceivePortImpl._handleMessage (dart:isolate-patch/isolate_patch.dart:173:5)
+```
+
+## flutter doctor
+
+```
+[32m[✓][39m Flutter (Channel stable, v1.9.1+hotfix.6, on Microsoft Windows [Version 10.0.18362.418], locale en-US)
+    [32m•[39m Flutter version 1.9.1+hotfix.6 at C:\Users\Ciprian Turcu\Documents\sdk\flutter
+    [32m•[39m Framework revision 68587a0916 (6 weeks ago), 2019-09-13 19:46:58 -0700
+    [32m•[39m Engine revision b863200c37
+    [32m•[39m Dart version 2.5.0
+
+[33m[!][39m Android toolchain - develop for Android devices (Android SDK version 29.0.1)
+    [32m•[39m Android SDK at C:\Users\Ciprian Turcu\AppData\Local\Android\Sdk
+    [32m•[39m Android NDK location not configured (optional; useful for native profiling support)
+    [32m•[39m Platform android-29, build-tools 29.0.1
+    [32m•[39m ANDROID_HOME = C:\Users\Ciprian Turcu\AppData\Local\Android\Sdk
+    [32m•[39m Java binary at: C:\Program Files\Android\Android Studio\jre\bin\java
+    [32m•[39m Java version OpenJDK Runtime Environment (build 1.8.0_152-release-1343-b01)
+    [33m![39m Some Android licenses not accepted.  To resolve this, run: flutter doctor --android-licenses
+
+[33m[!][39m Android Studio (version 3.4)
+    [32m•[39m Android Studio at C:\Program Files\Android\Android Studio
+    [31m✗[39m Flutter plugin not installed; this adds Flutter specific functionality.
+    [31m✗[39m Dart plugin not installed; this adds Dart specific functionality.
+    [32m•[39m Java version OpenJDK Runtime Environment (build 1.8.0_152-release-1343-b01)
+
+[32m[✓][39m VS Code (version 1.39.2)
+    [32m•[39m VS Code at C:\Users\Ciprian Turcu\AppData\Local\Programs\Microsoft VS Code
+    [32m•[39m Flutter extension version 3.5.1
+
+[32m[✓][39m Connected device (1 available)
+    [32m•[39m Android SDK built for x86 • emulator-5554 • android-x86 • Android 9 (API 28) (emulator)
+
+[33m![39m Doctor found issues in 2 categories.
+```
