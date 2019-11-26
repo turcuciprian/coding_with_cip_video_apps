@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
+import 'package:random_color/random_color.dart';
 
 void main() => runApp(MyApp());
 
@@ -46,7 +48,11 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
-  void _incrementCounter() {
+  void _incrementCounter() async {
+    RandomColor _randomColor = RandomColor();
+
+    Color _color = _randomColor.randomColor();
+    await FlutterStatusbarcolor.setStatusBarColor(_color);
     setState(() {
       // This call to setState tells the Flutter framework that something has
       // changed in this State, which causes it to rerun the build method below
