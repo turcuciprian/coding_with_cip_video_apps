@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
-class Page2 extends StatefulWidget {
-  Page2({Key key}) : super(key: key);
+class ConsumerExampleWidget extends StatefulWidget {
+  ConsumerExampleWidget({Key key}) : super(key: key);
   @override
-  Page2State createState() => Page2State();
+  ConsumerExampleWidgetState createState() => ConsumerExampleWidgetState();
 }
 
-class Page2State extends State<Page2> {
+class ConsumerExampleWidgetState extends State<ConsumerExampleWidget> {
   @override
   Widget build(BuildContext context) {
     List<String> textList = [];
     return Scaffold(
       appBar: AppBar(
-        title: Text('Page 2'),
+        title: Text('Consumer Example'),
       ),
       body: Center(
         child: Container(
