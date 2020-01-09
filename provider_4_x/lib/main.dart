@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'ConsumerExampleWidget.dart';
 import 'ProviderOfExampleWidget.dart';
 
 void main() => runApp(MyApp());
@@ -35,16 +34,9 @@ class _MyHomePageState extends State<MyHomePage> {
     linesOfText = [];
   }
 
-  void _switchToWindow(type) {
-    switch (type) {
-      case 'consumer':
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => ConsumerExampleWidget()));
-        break;
-      default:
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => ProviderOfExampleWidget()));
-    }
+  void _nextWindowExample() {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => ProviderOfExampleWidget()));
   }
 
   void addRandomListSentance() {
@@ -107,46 +99,23 @@ class _MyHomePageState extends State<MyHomePage> {
           addToListButton,
         ]),
       ),
-      floatingActionButton:
-          Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-        Container(
-          height: 60,
-          width: 160,
-          child: FlatButton(
-            color: Colors.blue,
-            textColor: Colors.white,
-            disabledColor: Colors.grey,
-            disabledTextColor: Colors.black,
-            padding: EdgeInsets.all(8.0),
-            splashColor: Colors.blueAccent,
-            onPressed: ()=>_switchToWindow('consumer'),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[Text('Consumer'), Icon(Icons.arrow_forward)],
-            ),
+      floatingActionButton: Container(
+        height: 60,
+        width: 160,
+        child: FlatButton(
+          color: Colors.blue,
+          textColor: Colors.white,
+          disabledColor: Colors.grey,
+          disabledTextColor: Colors.black,
+          padding: EdgeInsets.all(8.0),
+          splashColor: Colors.blueAccent,
+          onPressed: () => _nextWindowExample(),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[Text('Consumer'), Icon(Icons.arrow_forward)],
           ),
         ),
-        Container(
-          height: 60,
-          width: 160,
-          child: FlatButton(
-            color: Colors.purple,
-            textColor: Colors.white,
-            disabledColor: Colors.grey,
-            disabledTextColor: Colors.black,
-            padding: EdgeInsets.all(8.0),
-            splashColor: Colors.blue,
-            onPressed: ()=>_switchToWindow('default'),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text('Provider Of'),
-                Icon(Icons.arrow_forward)
-              ],
-            ),
-          ),
-        ),
-      ]),
+      ),
     );
   }
 }
