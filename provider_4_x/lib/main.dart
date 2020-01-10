@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
 import 'ProviderOfExampleWidget.dart';
+import 'package:provider/provider.dart';
+import 'package:provider_4_x/customProvider.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return MultiProvider(
+      providers: [ChangeNotifierProvider(create: (_) => CustomProvider())],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: MyHomePage(title: 'Flutter Demo Home Page'),
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
+    return;
   }
 }
 
@@ -43,7 +49,8 @@ class _MyHomePageState extends State<MyHomePage> {
     tempList.shuffle();
     String tempDynamicString = tempList.join(' ');
     setState(() {
-      linesOfText.add(tempDynamicString);
+      Provider.of<CustomProvider>(context, listen:false).addListElement(tempDynamicString);
+      // linesOfText.add(tempDynamicString);
       print(linesOfText);
     });
   }
@@ -72,50 +79,55 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
     );
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(children: [
-          Container(
-            height: 300,
-            child: ListView.builder(
-              itemCount: linesOfText.length,
-              itemBuilder: (BuildContext context, int index) {
-                var randomColor =
-                    index % 2 != 0 ? Color(0xff0039e6) : Color(0xff00134d);
-                return Container(
-                  padding: const EdgeInsets.all(5),
-                  color: randomColor,
-                  child: Text(
-                    linesOfText[index],
-                    style: TextStyle(fontSize: 21, color: Colors.white),
-                  ),
-                );
-              },
+    return Consumer<CustomProvider>(builder: (context, customProvider, _) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(widget.title),
+        ),
+        body: Center(
+          child: Column(children: [
+            Container(
+              height: 300,
+              child: ListView.builder(
+                itemCount: customProvider.getListOfStrings.length,
+                itemBuilder: (BuildContext context, int index) {
+                  var randomColor =
+                      index % 2 != 0 ? Color(0xff0039e6) : Color(0xff00134d);
+                  return Container(
+                    padding: const EdgeInsets.all(5),
+                    color: randomColor,
+                    child: Text(
+                      customProvider.getListOfStrings[index],
+                      style: TextStyle(fontSize: 21, color: Colors.white),
+                    ),
+                  );
+                },
+              ),
+            ),
+            addToListButton,
+          ]),
+        ),
+        floatingActionButton: Container(
+          height: 60,
+          width: 160,
+          child: FlatButton(
+            color: Colors.blue,
+            textColor: Colors.white,
+            disabledColor: Colors.grey,
+            disabledTextColor: Colors.black,
+            padding: EdgeInsets.all(8.0),
+            splashColor: Colors.blueAccent,
+            onPressed: () => _nextWindowExample(),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text('Provider of'),
+                Icon(Icons.arrow_forward)
+              ],
             ),
           ),
-          addToListButton,
-        ]),
-      ),
-      floatingActionButton: Container(
-        height: 60,
-        width: 160,
-        child: FlatButton(
-          color: Colors.blue,
-          textColor: Colors.white,
-          disabledColor: Colors.grey,
-          disabledTextColor: Colors.black,
-          padding: EdgeInsets.all(8.0),
-          splashColor: Colors.blueAccent,
-          onPressed: () => _nextWindowExample(),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[Text('Consumer'), Icon(Icons.arrow_forward)],
-          ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

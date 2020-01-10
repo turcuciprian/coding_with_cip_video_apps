@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:provider_4_x/customProvider.dart';
 
 class ProviderOfExampleWidget extends StatefulWidget {
   ProviderOfExampleWidget({Key key}) : super(key: key);
@@ -9,7 +11,8 @@ class ProviderOfExampleWidget extends StatefulWidget {
 class ProviderOfExampleWidgetState extends State<ProviderOfExampleWidget> {
   @override
   Widget build(BuildContext context) {
-    List<String> textList = [];
+    List<String> textList =
+        Provider.of<CustomProvider>(context, listen: false).getListOfStrings;
     return Scaffold(
       appBar: AppBar(
         title: Text('ProviderOf Example'),
