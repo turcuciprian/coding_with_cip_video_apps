@@ -1,3 +1,5 @@
+import './utils/routes.dart';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -9,6 +11,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Boilerplate Demo',
+      routes: Routes.routes,
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -34,7 +37,19 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Container()
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            RaisedButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed(Routes.login);
+              },
+              child: Text('Login'),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
