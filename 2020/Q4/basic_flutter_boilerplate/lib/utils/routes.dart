@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../ui/login.dart';
+import '../ui/widgets/login.dart';
 
 class Routes{
   Routes._();

@@ -1,3 +1,5 @@
+import 'package:basic_flutter_boilerplate/ui/themes.dart';
+
 import './utils/routes.dart';
 
 import 'package:flutter/material.dart';
@@ -12,10 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Boilerplate Demo',
       routes: Routes.routes,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
+      theme: mainTheme,
       home: MyHomePage(title: 'Flutter Boilerplate Demo'),
     );
   }
