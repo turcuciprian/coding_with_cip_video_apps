@@ -11,6 +11,7 @@ ThemeData secondaryTheme = ThemeData(
   buttonColor: Colors.red,
   visualDensity: VisualDensity.adaptivePlatformDensity,
   textTheme: TextTheme(
-    headline6: TextStyle(fontSize: 15, color: Colors.white),headline2: TextStyle(fontSize: 25),
+    headline6: TextStyle(fontSize: 15, color: Colors.white),
+    headline2: TextStyle(fontSize: 25),
   ),
 );

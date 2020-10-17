@@ -1,11 +1,18 @@
+import 'package:basic_flutter_boilerplate/globalStateManagement/themeManagement.dart';
 import 'package:basic_flutter_boilerplate/ui/themes.dart';
+import 'package:provider/provider.dart';
 
 import './utils/routes.dart';
 
 import 'package:flutter/material.dart';
+import './globalStateManagement/increment.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    MultiProvider(providers: [
+      ChangeNotifierProvider(create: (_) => Increment()),
+      ChangeNotifierProvider(create: (_) => ThemeManagement()),
+    ],child:MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -14,7 +21,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Boilerplate Demo',
       routes: Routes.routes,
-      theme: mainTheme,
+      theme: context.watch<ThemeManagement>().currentTheme,
       home: MyHomePage(title: 'Flutter Boilerplate Demo'),
     );
   }
@@ -32,6 +39,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
+    var incrementValue=context.watch<Increment>().count;
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -45,6 +53,19 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.of(context).pushNamed(Routes.login);
               },
               child: Text('Login'),
+            ),
+            RaisedButton(
+              onPressed: () {
+                context.read<Increment>().increment();
+              },
+              child: Text('Increment Using Provider'),
+            ),
+            Text('Value:${incrementValue}', style: secondaryTheme.textTheme.headline2),
+            RaisedButton(
+              onPressed: () {
+                context.read<ThemeManagement>().toggleTheme();
+              },
+              child: Text('Toggle Theme'),
             ),
           ],
         ),
