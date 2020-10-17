@@ -1,5 +1,9 @@
+import 'package:basic_flutter_boilerplate/globalStateManagement/language.dart';
 import 'package:basic_flutter_boilerplate/globalStateManagement/themeManagement.dart';
 import 'package:basic_flutter_boilerplate/ui/themes.dart';
+import 'package:basic_flutter_boilerplate/utils/MyLocalizations.dart';
+import 'package:basic_flutter_boilerplate/utils/MyLocalizationsDelegate.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
 import './utils/routes.dart';
@@ -8,17 +12,37 @@ import 'package:flutter/material.dart';
 import './globalStateManagement/increment.dart';
 
 void main() {
-  runApp(
-    MultiProvider(providers: [
-      ChangeNotifierProvider(create: (_) => Increment()),
-      ChangeNotifierProvider(create: (_) => ThemeManagement()),
-    ],child:MyApp()));
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (_) => Increment()),
+    ChangeNotifierProvider(create: (_) => ThemeManagement()),
+    ChangeNotifierProvider(create: (_) => LanguageProvider()),
+  ], child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      locale: context.watch<LanguageProvider>().language,
+      supportedLocales: [
+        const Locale('en', ''),
+        const Locale('es', ''),
+      ],
+      localizationsDelegates: [
+        const MyLocalizationsDelegate(),
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate
+      ],
+      localeResolutionCallback:
+          (Locale locale, Iterable<Locale> supportedLocales) {
+        for (Locale supportedLocale in supportedLocales) {
+          if (supportedLocale.languageCode == locale.languageCode ||
+              supportedLocale.countryCode == locale.countryCode) {
+            return supportedLocale;
+          }
+        }
+        return supportedLocales.first;
+      },
       title: 'Flutter Boilerplate Demo',
       routes: Routes.routes,
       theme: context.watch<ThemeManagement>().currentTheme,
@@ -39,7 +63,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    var incrementValue=context.watch<Increment>().count;
+    var incrementValue = context.watch<Increment>().count;
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -60,12 +84,20 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: Text('Increment Using Provider'),
             ),
-            Text('Value:${incrementValue}', style: secondaryTheme.textTheme.headline2),
+            Text('Value:${incrementValue}',
+                style: secondaryTheme.textTheme.headline2),
             RaisedButton(
               onPressed: () {
                 context.read<ThemeManagement>().toggleTheme();
               },
               child: Text('Toggle Theme'),
+            ),
+            Text(MyLocalizations.of(context).trans("hello_world")),
+            RaisedButton(
+              onPressed: () {
+                context.read<LanguageProvider>().changeLaguage();
+              },
+              child: Text('Toggle Language'),
             ),
           ],
         ),
