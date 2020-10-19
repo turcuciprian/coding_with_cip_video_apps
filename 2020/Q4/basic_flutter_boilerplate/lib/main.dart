@@ -1,6 +1,7 @@
 import 'package:basic_flutter_boilerplate/globalStateManagement/language.dart';
 import 'package:basic_flutter_boilerplate/globalStateManagement/requestsTest.dart';
 import 'package:basic_flutter_boilerplate/globalStateManagement/themeManagement.dart';
+import 'package:basic_flutter_boilerplate/localStorage/localSTorageExample.dart';
 import 'package:basic_flutter_boilerplate/ui/themes.dart';
 import 'package:basic_flutter_boilerplate/utils/MyLocalizations.dart';
 import 'package:basic_flutter_boilerplate/utils/MyLocalizationsDelegate.dart';
@@ -63,6 +64,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+    LocalStorageExample localStorageEx = LocalStorageExample();
+    String localStorageAuthor = '';
   @override
   Widget build(BuildContext context) {
     String author = context.watch<RequestsTest>().data['slideshow'] != null
@@ -110,7 +113,22 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: Text('Make Request'),
             ),
-            Text('$author')
+            Text('$author'),
+            RaisedButton(
+              onPressed: () {
+                setState(() {
+                  localStorageAuthor = localStorageEx.getAuthor();
+                });
+              },
+              child: Text('get Local'),
+            ),
+            RaisedButton(
+              onPressed: () {
+                localStorageEx.setAuthor('test3');
+              },
+              child: Text('SET Local'),
+            ),
+            Text('Local Storage text:$localStorageAuthor')
           ],
         ),
       ),
