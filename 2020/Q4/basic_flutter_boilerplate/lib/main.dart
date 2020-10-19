@@ -65,7 +65,9 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    String author = context.watch<RequestsTest>().data['slideshow']['author'];
+    String author = context.watch<RequestsTest>().data['slideshow'] != null
+        ? context.watch<RequestsTest>().data['slideshow']['author']
+        : 'empty';
     var incrementValue = context.watch<Increment>().count;
     return Scaffold(
       appBar: AppBar(
